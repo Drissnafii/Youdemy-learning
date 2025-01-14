@@ -3,7 +3,7 @@ class Database {
     private string $host;
     private string $dbname;
     private string $user;
-    private mixed $pass;
+    private string $pass;
     private $conn;
 
     //ne sont acecibles qu 'a l'interireur de la class ell-meme
