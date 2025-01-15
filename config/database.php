@@ -8,12 +8,12 @@ class Database {
 
     //ne sont acecibles qu 'a l'interireur de la class ell-meme
 
-    public function __construct($host, $dbname, $user, $pass)
+    public function __construct()
     {
-        $this->host = $host;
-        $this->dbname = $dbname;
-        $this->user = $user;
-        $this->pass = $pass;
+        $this->host = 'localhost';
+        $this->dbname = 'youdemy_db';
+        $this->user = 'root';
+        $this->pass = '';
     }
 
     public function connect() {
