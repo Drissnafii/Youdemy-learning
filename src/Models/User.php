@@ -1,26 +1,20 @@
 <?php
-require __DIR__ . '/../../config/database.php';
+// require __DIR__ . '/../../config/database.php';
 class User {
-    private int $userID;
-    private string $username;
-    private string $password;
-    private string $email;
-    private string $role;
-    private Database $db;
+    public $conn;
 
-    public function __construct(Database $db)
-    {
-        $this->db = $db;
-    }
-
-    public function register(string $username, string $password,string $email, string $role = 'student') {
-        if (empty($username) || empty($email) || empty($password)) {
-            throw new Exception("Tous les champs sont obligatoire.");
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("Forma d'email invalide.");
-        }
-
-        
+    public function register($username, $email, $password, $role) {
+        $conn = new PDO('mysql:host=localhost;dbname=youdemy_db;', 'root', '');
+        $query = "INSERT INTO Users (username,email, password, role)
+        values (:username, :email, :password, :role)";
+        $stml = $conn->prepare($query);
+        $stml->execute([
+            "username" => $username,
+            "email" => $email,
+            "password" => $password,
+            "role" => $role,
+        ]);
     }
 }
+
+// $driss = new User();
