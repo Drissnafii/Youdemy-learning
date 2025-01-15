@@ -4,6 +4,7 @@ CREATE TABLE Users (
     Username VARCHAR(50) UNIQUE NOT NULL,
     Email VARCHAR(100) UNIQUE NOT NULL,
     Password VARCHAR(255) NOT NULL,
+    Status ENUM('active', 'suspended', 'deleted') DEFAULT 'active',
     Role ENUM('student', 'teacher', 'admin') NOT NULL DEFAULT 'student',
 );
 
