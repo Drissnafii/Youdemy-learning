@@ -15,22 +15,26 @@ class User {
             "password" => $hashed_password,
             "role" => $role,
         ]);
+        $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
+        header("location: $baseUrl");
     }
 
     public function login($email, $password) {
         $conn = new PDO('mysql:host=localhost;dbname=youdemy_db;', 'root', '');
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $query = "SELECT * FROM Users
-        WHERE email = :email AND password = :password";
+        WHERE email = :email";
         $stml = $conn->prepare($query);
         $stml->execute([
-            "email" => $email,
-            "password" => $hashed_password,
+            "email" => $email
         ]);
         $user = $stml->fetch();
-        if (password_verify($password,$user['password'])) {
-            header('location: Course.php');
+        if ($user) {
+            if (password_verify($password, $user['Password'])) {
+                $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
+                header("location: $baseUrl");
+            }
         }
+        echo "Les donne est incorrect";
     }
 }
 
