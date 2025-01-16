@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 include_once __DIR__ . '/../../config/database.php';
+=======
+// require __DIR__ . '/../../config/database.php';
+>>>>>>> feature/user-model
 class User {
     public $conn;
 
@@ -21,14 +25,19 @@ class User {
 
     public function login($email, $password) {
         $conn = new PDO('mysql:host=localhost;dbname=youdemy_db;', 'root', '');
+<<<<<<< HEAD
         $query = "SELECT * FROM Users
         WHERE email = :email";
+=======
+        $query = "SELECT * FROM Users WHERE email = :email";
+>>>>>>> feature/user-model
         $stml = $conn->prepare($query);
         $stml->execute([
             "email" => $email
         ]);
         $user = $stml->fetch();
         if ($user) {
+<<<<<<< HEAD
             if (password_verify($password, $user['Password'])) {
                 $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
                 header("location: $baseUrl");
