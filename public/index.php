@@ -11,7 +11,7 @@ $config = require __DIR__ . '/../config/database.php';
 <body>
     <?php
     $db = new Database("localhost", "youdemy_db", "root", "");
-    $conn = $db->getConnection();
+    $conn = $db->connect();
 
     if ($conn) {
         echo "Database connected successfully !";
