@@ -28,7 +28,7 @@ class User {
         ]);
         $user = $stml->fetch();
         if ($user) {
-            if ($user["Email"] === "jesuisadmin@gmail.com") {
+            if ($user["Email"] === "admin@gmail.com") {
                 if (password_verify($password, $user['Password'])) {
                     $adminDashPage = "http://" . 'localhost' . "/Youdemy-learning/View/admin/dashboard.php";
                     header("location: $adminDashPage");
@@ -36,13 +36,17 @@ class User {
                 }
                 echo "password of A, is incorrect";
             }
-            if ($user["Email"] === "jesuisuser@gmail.com") {
+            
+            $teacherEmails  = array(
+                "teacher02@gmail.com", 
+                "teacher03@gmail.com"
+                );
+            if (in_array($user["Email"], $teacherEmails)) {
                 if (password_verify($password, $user['Password'])) {
-                    $adminDashPage = "http://" . 'localhost' . "/Youdemy-learning/View/admin/dashboard.php";
-                    header("location: $adminDashPage");
+                    $teacherDash = "http://" . 'localhost' . "/Youdemy-learning/View/courses/teacherDash.php";
+                    header("location: $teacherDash");
                     exit();
                 }
-                echo "password of U, is incorrect";
             }
             if (password_verify($password, $user['Password'])) {
                 $catalogPage = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";

@@ -1,2 +1,2 @@
 <?php
-echo "You Are in the catalog page. ";
+echo "<h1>Normal User = Catalog page</h1>";

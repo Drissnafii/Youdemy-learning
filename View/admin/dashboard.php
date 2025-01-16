@@ -1,2 +1,2 @@
 <?php
-echo "you are in the <h2>Admin Dashboard</h2>";
+echo "<h1> This is the Admin dashboard </h1>";
