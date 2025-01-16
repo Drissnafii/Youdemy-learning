@@ -26,6 +26,7 @@
         <option value="admin">admin</option>
     </select>
     <button type="submit" name="register">S'inscrire</button>
+    <p>Already have an account? <a href="login.php">Log in here</a>.</p>
 </form>
 </body>
 </html>
