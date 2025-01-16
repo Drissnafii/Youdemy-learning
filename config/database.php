@@ -25,11 +25,4 @@ class Database {
             die("Database connection failed." . $e->getMessage());
         }
     }
-
-    public function getConnection() {
-        if ($this->conn === null) {
-            $this->connect();
-        }
-        return $this->conn;
-    }
 }
