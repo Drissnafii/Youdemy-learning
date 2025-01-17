@@ -26,10 +26,4 @@ class Database {
         }
     }
 
-    public function getConnection() {
-        if ($this->conn === null) {
-            $this->connect();
-        }
-        return $this->conn;
-    }
 }
