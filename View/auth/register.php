@@ -1,7 +1,11 @@
 <?php
     require __DIR__ . '/../../src/Models/User.php';
+    session_start(); 
+    if (isset($_SESSION['error_message'])) {
+        echo "<div style='color: red;'>" . $_SESSION['error_message'] . "</div>";
+        unset($_SESSION['error_message']);
+    }
     if (isset($_POST['register'])) {
-        # code...
         $Driss = new User();
         $Driss->register($_POST['username'], $_POST['email'], $_POST['password'], $_POST['role']);
         echo "inserted successfully !";
