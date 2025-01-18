@@ -4,19 +4,50 @@ class User {
     public $conn;
 
     public function register($username, $email, $password, $role) {
+        if (empty($username) || empty($email) || empty($password)) {
+            throw new Exception("Tous les champs sont obligatoires.");
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Format d'email invalide.");
+        }
+    
         $conn = new PDO('mysql:host=localhost;dbname=youdemy_db;', 'root', '');
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO Users (username,email, password, role)
-        values (:username, :email, :password, :role)";
-        $stml = $conn->prepare($query);
-        $stml->execute([
-            "username" => $username,
-            "email" => $email,
-            "password" => $hashed_password,
-            "role" => $role,
+    
+        // Check if email already exists
+        $checkQuery = "SELECT COUNT(*) FROM Users WHERE email = :email";
+        $checkStmt = $conn->prepare($checkQuery);
+        $checkStmt->execute([
+            "email" => $email
         ]);
-        $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
-        header("location: $baseUrl");
+        $emailExists = $checkStmt->fetchColumn();
+    
+        if ($emailExists) {
+            $_SESSION['error_message'] = "Cet email est déjà utilisé.";
+            header("Location: http://localhost/Youdemy-learning/View/auth/register.php");
+            exit();
+        }
+    
+        // email exist => ... continue 
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO Users (username, email, password, role)
+                  VALUES (:username, :email, :password, :role)";
+        try {
+            $stml = $conn->prepare($query);
+            $stml->execute([
+                "username" => $username,
+                "email" => $email,
+                "password" => $hashed_password,
+                "role" => $role,
+            ]);
+    
+            $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
+            header("Location: $baseUrl");
+            exit();
+        } catch (PDOException $e) {
+            $_SESSION['error_message'] = "Une erreur s'est produite lors de l'inscription. Veuillez réessayer.";
+            header("Location: http://localhost/Youdemy-learning/View/auth/register.php");
+            exit();
+        }
     }
 
     public function login($email, $password) {
