@@ -40,6 +40,5 @@ youdemy/
 ```
 
 ## 🔗 Important Links
-- [Class Diagram](later...)
-- [Use Case Diagram](later...)
+- [JIRA PLanning](https://amineyoucode.atlassian.net/jira/software/projects/YD/summary)
 - [Project Presentation](later...)
