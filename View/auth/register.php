@@ -124,7 +124,6 @@
         <select name="role" id="role" required>
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
-            <option value="admin">Admin</option>
         </select>
         <button type="submit" name="register">S'inscrire</button>
         <p>Already have an account? <a href="login.php">Log in here</a></p>
