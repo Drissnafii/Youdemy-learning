@@ -25,9 +25,10 @@
             background-color: white;
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 0 0 40px #6b46c1 inset; /* Added shadow with color */
             width: 100%;
             max-width: 400px;
+            animation: fadeInUp 1s ease-out;
         }
 
         h2 {
@@ -90,6 +91,7 @@
             border-radius: 5px;
             margin-bottom: 1rem;
             text-align: center;
+            animation: fadeInUp 0.5s ease-out;
         }
 
         .success-message {
@@ -99,6 +101,18 @@
             border-radius: 5px;
             margin-bottom: 1rem;
             text-align: center;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
