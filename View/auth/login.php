@@ -127,7 +127,6 @@
         disabled:bg-[#E5D9F2]
         disabled:text-[#A294F9]
         disabled:cursor-not-allowed
-        hover:bg-[#0000]
         hover:shadow-[#CDC1FF]/40
         active:scale-84
         before:absolute
