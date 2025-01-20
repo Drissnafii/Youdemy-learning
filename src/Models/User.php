@@ -65,7 +65,6 @@ class User {
                     header("location: $adminDashPage");
                     exit();
                 }
-                echo "password of A, is incorrect";
             }
             
             $teacherEmails  = array(

@@ -3,9 +3,7 @@ body {
 }
 
 main {
-    background-image: url(../images/loginbg.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #CDC1FF;
 }
 
 h1, h2, h3, h4, h5, h6, input, label, button {
@@ -92,4 +90,69 @@ h1, h2, h3, h4, h5, h6, input, label, button {
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
+}
+
+/* styling the image logo */
+
+.relativeX {
+    transform: perspective(1500px) rotateY(15deg);
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    transition: transform 1s ease 0s;
+}
+.relativeX:hover {
+    transform: perspective(3000px) rotateY(5deg);
+}
+
+/* Styling the youcode logo text  */
+.link {
+	outline: none;
+	text-decoration: none;
+	position: relative;
+	line-height: 1;
+	display: inline-block;
+}
+
+.link--kukuri {
+	text-transform: uppercase;
+	overflow: hidden;
+	line-height: 0.75;
+	color: #b2b0a9;
+}
+
+.link--kukuri:hover {
+	color: #b2b0a9;
+}
+
+.link--kukuri::after {
+	content: '';
+	position: absolute;
+	height: 16px;
+	width: 100%;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+	background: #F9F9F9;
+	transform: translate3d(-100%,0,0);
+	transition: transform 0.4s;
+	transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+}
+
+.link--kukuri:hover::after {
+	transform: translate3d(100%,0,0);
+}
+
+.link--kukuri::before {
+	content: attr(data-letters);
+	position: absolute;
+	z-index: 2;
+	overflow: hidden;
+	color: #3DBBF7;
+	white-space: nowrap;
+	width: 0%;
+	transition: width 0.4s 0.3s;
+}
+
+.link--kukuri:hover::before {
+	width: 100%;
 }

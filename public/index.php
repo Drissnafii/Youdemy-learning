@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youdemy - Online Learning Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .hero-gradient {
@@ -52,7 +53,9 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="text-white">
                     <h1 class="text-5xl font-bold leading-tight mb-6 font-poppins">
-                        Welcome to Youdemy! Unlock Your Potential with Online Learning
+                        Welcome to 
+                        <a class="link link--kukuri" href="#" data-letters="Youdemy">Youdemy</a>
+                        ! Unlock Your Potential with Online Learning
                     </h1>
                     <p class="text-lg mb-8 text-white/90">
                         Explore a wide range of courses taught by expert instructors. Start your learning journey today.
@@ -66,7 +69,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="relative">
+                <div class="relativeX">
                     <img src="./assets/images/udemyLogo.png" alt="Online Learning" class="rounded-lg shadow-2xl">
                     <!-- You can add the rating overlay back if you want, but it might be better to just have the hero image -->
                 </div>

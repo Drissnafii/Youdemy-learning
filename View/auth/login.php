@@ -1,5 +1,6 @@
 <?php
         require __DIR__ . '/../../src/Models/User.php';
+        require __DIR__ . '/../../includes/header.php';
         
         session_start();
         
@@ -49,7 +50,7 @@
             </div>
 
             <!-- Form -->
-            <form method="POST">
+            <form id="loginKframe" method="POST">
                 <!-- Email Field -->
                 <div class="relative mb-6">
                     <input 
@@ -150,28 +151,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  <!-- require __DIR__ . '/View/includes/footer.php';  -->
 
 
-<script src="View/assets/JS/script.js"></script>
+<script src="./../../public/assets/main.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    /** @type {import('tailwindcss').Config} */
     module.exports = {
       content: ["./src/**/*.{html,js}"],
       theme: {
