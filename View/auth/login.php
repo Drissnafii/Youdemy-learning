@@ -1,124 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        body {
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        form {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 0 0 40px #6b46c1 inset; /* Added shadow with color */
-            width: 100%;
-            max-width: 400px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.8rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        p {
-            text-align: center;
-            margin-top: 1rem;
-            color: #666;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            text-align: center;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .success-message {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            text-align: center;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-    <?php
+<?php
         require __DIR__ . '/../../src/Models/User.php';
+        
         session_start();
         
         if (isset($_SESSION['error_message'])) {
@@ -131,12 +13,177 @@
             $Driss->login($_POST['email'], $_POST['password']);
         }
     ?>
-    <form method="post">
+
+    <!-- <form method="post">
         <h2>Login</h2>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit" name="login">Login</button>
         <p>Don't have an account? <a href="register.php">Create one here</a></p>
-    </form>
+    </form> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Interface</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="./../../public/assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<!-- Try includding taildwing.css  -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+</head>
+
+    <div class="w-full max-w-md mx-auto">
+        <div class="bg-[#F2F0E9] rounded-xl shadow-md p-8 border border-gray-200 max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-[#CDC1FF] rounded-full inline-flex items-center justify-center mb-4">
+                    <i class="fas fa-user-circle text-7xl" ></i>
+                </div>
+                <h1 class="text-gray-800 text-xl mb-2">Welcome Back</h1>
+                <p class="text-gray-600 text-sm">Sign in to continue your journey</p>
+            </div>
+
+            <!-- Form -->
+            <form method="POST">
+                <!-- Email Field -->
+                <div class="relative mb-6">
+                    <input 
+                        type="email" 
+                        name="email"
+                        id="email" 
+                        class="form-control" 
+                        placeholder=" "
+                        required
+                        autocomplete="email"
+                    >
+                    <label for="email" class="floating-label">Email address</label>
+                </div>
+
+                <!-- Password Field -->
+                <div class="relative mb-6">
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        class="form-control" 
+                        placeholder=" "
+                        required
+                        autocomplete="current-password"
+                    >
+                    <label for="password" class="floating-label">Password</label>
+                    <button 
+                        name="password"
+                        type="button"
+                        id="password-toggle"
+                        class="password-toggle"
+                        aria-label="Toggle password visibility"
+                    >
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+
+                <!-- Options -->
+                <div class="flex justify-center items-center mb-6 text-sm">
+                    <div class="">
+                      <a href="#" class="text-[#A294F9] no-underline transition-colors duration-200 hover:text-[#8C7DF9]">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" name="login" class="
+        w-full 
+        py-3 
+        relative
+        overflow-hidden
+        bg-[#A294F9]
+        text-[#F5EFFF] 
+        border 
+        border-transparent
+        rounded-full
+        font-semibold 
+        transition-all 
+        duration-300 
+        flex 
+        items-center 
+        justify-center 
+        gap-2 
+        active:bg-[#8C7DF9]
+        disabled:bg-[#E5D9F2]
+        disabled:text-[#A294F9]
+        disabled:cursor-not-allowed
+        hover:bg-[#0000]
+        hover:shadow-[#CDC1FF]/40
+        active:scale-84
+        before:absolute
+        before:inset-0
+        before:bg-[#8C7DF9]
+        before:transition-transform 
+        before:duration-500
+        before:transform 
+        before:scale-x-0 
+        before:origin-center
+        hover:before:scale-x-100
+        aria-disabled:true
+    ">
+    <span class="relative z-10">Login</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 relative z-10" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+</button>
+</form>
+
+<!-- Sign Up Link -->
+<div class="text-center mt-6 text-sm text-gray-600">
+    <p>
+        Don't have an account?
+        <a href="./register.php" class="text-[#A294F9] no-underline font-medium transition-colors duration-200 hover:text-[#8C7DF9]">Create one now</a>
+    </p>
+</div>
+    </div>
+    </div>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- require __DIR__ . '/View/includes/footer.php';  -->
+
+
+<script src="View/assets/JS/script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
+      content: ["./src/**/*.{html,js}"],
+      theme: {
+        extend: {
+           fontFamily:{
+            'outfit' : ['Outfit', 'sans-serif'],
+              'poppins': ['Poppins', 'sans-serif'],
+            }
+        },
+      },
+      plugins: [],
+    }
+    </script>
 </body>
 </html>
