@@ -28,12 +28,12 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-[#6b46c1] font-poppins">Youdemy</a>
+                    <a href="http://localhost/Youdemy-learning/public/" class="text-2xl font-bold text-[#6b46c1] font-poppins">Youdemy</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/courses" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
+                    <a href="../View/auth/login.php" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
                     <a href="../View/auth/login.php" class="text-gray-600 hover:text-gray-900 transition-colors">Login</a>
-                    <a href="View/auth/register.php" class="px-6 py-2 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-medium">
+                    <a href="../View/auth/register.php" class="px-6 py-2 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-medium">
                         Register
                     </a>
                 </div>
@@ -58,7 +58,7 @@
                         Explore a wide range of courses taught by expert instructors. Start your learning journey today.
                     </p>
                     <div class="flex gap-4">
-                        <a href="/courses" class="px-8 py-3 bg-white text-[#6b46c1] rounded-full hover:bg-gray-100 transition-colors font-semibold">
+                        <a href="#courses" class="px-8 py-3 bg-white text-[#6b46c1] rounded-full hover:bg-gray-100 transition-colors font-semibold">
                             Explore Courses
                         </a>
                         <a href="/register" class="px-8 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors font-medium">
@@ -173,7 +173,7 @@
             </div>
         </div>
         <div class="text-center mt-12">
-            <a href="/courses" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
+            <a href="../View/auth/login.php" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
                 View All Courses
             </a>
         </div>
