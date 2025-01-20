@@ -12,26 +12,6 @@
         echo "<div class='success-message'>Inserted successfully!</div>";
     }
 ?>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-</head>
-<body>
-    <form method="post">
-        <h2>Inscription</h2>
-        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Mot de passe" required>
-        <select name="role" id="role" required>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-        <button type="submit" name="register">S'inscrire</button>
-        <p>Already have an account? <a href="login.php">Log in here</a></p>
-    </form> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
