@@ -110,7 +110,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$99</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$149</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
@@ -169,14 +169,14 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$79</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
             </div>
         </div>
         <div class="text-center mt-12">
-            <a href="../View/auth/login.php" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
+            <a href="./../View/auth/login.php" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
                 View All Courses
             </a>
         </div>
