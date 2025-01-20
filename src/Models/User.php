@@ -27,7 +27,7 @@ class User {
             exit();
         }
     
-        // email exist => ... continue 
+        // email not exist => ... continue 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $query = "INSERT INTO Users (username, email, password, role)
                   VALUES (:username, :email, :password, :role)";
@@ -40,8 +40,7 @@ class User {
                 "role" => $role,
             ]);
     
-            $baseUrl = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
-            header("Location: $baseUrl");
+            $this->login($email,$password);
             exit();
         } catch (PDOException $e) {
             $_SESSION['error_message'] = "Une erreur s'est produite lors de l'inscription. Veuillez réessayer.";
@@ -58,32 +57,28 @@ class User {
             "email" => $email
         ]);
         $user = $stml->fetch();
-        if ($user) {
-            if ($user["Email"] === "admin@gmail.com") {
-                if (password_verify($password, $user['Password'])) {
-                    $adminDashPage = "http://" . 'localhost' . "/Youdemy-learning/View/admin/dashboard.php";
-                    header("location: $adminDashPage");
-                    exit();
+ 
+            if ($user && password_verify($password, $user['Password'])) {
+                session_start();
+
+                $_SESSION["userId"]=$user["UserID"];
+                $_SESSION["role"]=$user["Role"];
+                
+
+                if($user["Role"]==="admin"){
+                    echo "admin";
+                }else if($user["Role"]==="teacher"){
+                    echo "teacher";
+                }else if($user["Role"]==="student"){
+                    $catalogPage = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
+                    header("location: $catalogPage");
+                }else{
+
                 }
+
+
             }
-            
-            $teacherEmails  = array(
-                "teacher02@gmail.com", 
-                "teacher03@gmail.com"
-                );
-            if (in_array($user["Email"], $teacherEmails)) {
-                if (password_verify($password, $user['Password'])) {
-                    $teacherDash = "http://" . 'localhost' . "/Youdemy-learning/View/courses/teacherDash.php";
-                    header("location: $teacherDash");
-                    exit();
-                }
-            }
-            if (password_verify($password, $user['Password'])) {
-                $catalogPage = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
-                header("location: $catalogPage");
-            }
-        }
-        echo "Les donne est incorrect";
+        return "Les donne est incorrect";
     }
 }
 

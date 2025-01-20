@@ -1,3 +1,18 @@
+    <?php
+        require __DIR__ . '/../../src/Models/User.php';
+        require __DIR__ . '/../../includes/header.php';
+        
+        
+        if (isset($_SESSION['error_message'])) {
+            echo "<div class='error-message'>" . $_SESSION['error_message'] . "</div>";
+            unset($_SESSION['error_message']);
+        }
+        
+        if (isset($_POST['login'])) {
+            $Driss = new User();
+            $var = $Driss->login($_POST['email'], $_POST['password']);
+        }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,22 +46,6 @@
 </head>
 
 <body>
-    <?php
-        require __DIR__ . '/../../src/Models/User.php';
-        require __DIR__ . '/../../includes/header.php';
-        
-        session_start();
-        
-        if (isset($_SESSION['error_message'])) {
-            echo "<div class='error-message'>" . $_SESSION['error_message'] . "</div>";
-            unset($_SESSION['error_message']);
-        }
-        
-        if (isset($_POST['login'])) {
-            $Driss = new User();
-            $Driss->login($_POST['email'], $_POST['password']);
-        }
-    ?>
 
     <div class="w-full max-w-md mx-auto">
         <div class="bg-[#F2F0E9] rounded-xl shadow-md p-8 border border-gray-200 max-w-xl">
@@ -57,6 +56,7 @@
                 </div>
                 <h1 class="text-gray-800 text-xl mb-2">Welcome Back</h1>
                 <p class="text-gray-600 text-sm">Sign in to continue your journey</p>
+                <p style="color: red;"><?=  isset($var)?  $var : "";  ?></p>
             </div>
 
             <!-- Form -->

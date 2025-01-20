@@ -1,7 +1,6 @@
 <?php
     require __DIR__ . '/../../src/Models/User.php';
     require __DIR__ . '/../../includes/header.php';
-    session_start(); 
     if (isset($_SESSION['error_message'])) {
         echo "<div class='error-message'>" . $_SESSION['error_message'] . "</div>";
         unset($_SESSION['error_message']);

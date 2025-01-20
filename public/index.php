@@ -120,7 +120,7 @@
             <!-- Data Science -->
             <div class="feature-card bg-white p-6 rounded-xl shadow-sm transition-all duration-300 group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
-                    <img src="https://dataexpertise.in/wp-content/uploads/2023/10/Data-Science-Must-have-Skills-e1697006962750-768x540.jpg" alt="Data Science Course Image" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="https://img.freepik.com/premium-photo/3d-flat-cartoon-data-scientist-analyzing-big-data-digital-transformation-data-scientist-wor_980716-174028.jpg?w=740">
                     <div class="absolute bottom-0 left-0 right-0 bg-[#6b46c1]/70 text-white p-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-xs font-medium">View More</span>
                     </div>
@@ -149,7 +149,7 @@
             <!-- Digital Marketing -->
             <div class="feature-card bg-white p-6 rounded-xl shadow-sm transition-all duration-300 group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
-                    <img src="https://www.optimalvirtualemployee.com/wp-content/uploads/2022/12/Web-Developer-skill-768x436.jpg" alt="Digital Marketing Course Image" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="https://img.freepik.com/free-photo/content-configuration-creativity-digital-media_53876-124012.jpg?t=st=1737387773~exp=1737391373~hmac=402757508d1df74bd9e5fefdcffb454e7b7ba23df6bf84134a469818f78aad86&w=996">
                     <div class="absolute bottom-0 left-0 right-0 bg-[#6b46c1]/70 text-white p-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-xs font-medium">View More</span>
                     </div>
