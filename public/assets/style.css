@@ -1,0 +1,158 @@
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+main {
+    background-color: #8878C3;
+}
+
+h1, h2, h3, h4, h5, h6, input, label, button {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Or more specific elements if you want to use different fonts*/
+.my-special-text {
+ font-family: 'Poppins', sans-serif;
+ font-weight: 600;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #E5D9F2;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:hover {
+    border-color: #CDC1FF;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #A294F9;
+    box-shadow: 0 0 0 2px rgba(162, 148, 249, 0.2);
+}
+
+.floating-label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    color: #666;
+    background: white;
+    padding: 0 0.25rem;
+}
+
+.form-control:focus ~ .floating-label,
+.form-control:not(:placeholder-shown) ~ .floating-label {
+    transform: translateY(-1.7rem) scale(0.85);
+    border-radius: 7px;
+    color: #A294F9;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: #A294F9;
+}
+
+ /* Drop down MENU  */
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+.dropdown-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* styling the image logo */
+
+.relativeX {
+    transform: perspective(1500px) rotateY(15deg);
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    transition: transform 1s ease 0s;
+}
+.relativeX:hover {
+    transform: perspective(3000px) rotateY(5deg);
+}
+
+/* Styling the youcode logo text  */
+.link {
+	outline: none;
+	text-decoration: none;
+	position: relative;
+	line-height: 1;
+	display: inline-block;
+}
+
+.link--kukuri {
+	text-transform: uppercase;
+	overflow: hidden;
+	line-height: 0.75;
+	color: #b2b0a9;
+}
+
+.link--kukuri:hover {
+	color: #b2b0a9;
+}
+
+.link--kukuri::after {
+	content: '';
+	position: absolute;
+	height: 16px;
+	width: 100%;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+	background: #F9F9F9;
+	transform: translate3d(-100%,0,0);
+	transition: transform 0.4s;
+	transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+}
+
+.link--kukuri:hover::after {
+	transform: translate3d(100%,0,0);
+}
+
+.link--kukuri::before {
+	content: attr(data-letters);
+	position: absolute;
+	z-index: 2;
+	overflow: hidden;
+	color: #3DBBF7;
+	white-space: nowrap;
+	width: 0%;
+	transition: width 0.4s 0.3s;
+}
+
+.link--kukuri:hover::before {
+	width: 100%;
+}

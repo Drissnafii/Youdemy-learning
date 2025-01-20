@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youdemy - Online Learning Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         .hero-gradient {
@@ -28,12 +29,12 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-[#6b46c1] font-poppins">Youdemy</a>
+                    <a href="http://localhost/Youdemy-learning/public/" class="text-2xl font-bold text-[#6b46c1] font-poppins">Youdemy</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/courses" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
+                    <a href="../View/auth/login.php" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
                     <a href="../View/auth/login.php" class="text-gray-600 hover:text-gray-900 transition-colors">Login</a>
-                    <a href="View/auth/register.php" class="px-6 py-2 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-medium">
+                    <a href="../View/auth/register.php" class="px-6 py-2 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-medium">
                         Register
                     </a>
                 </div>
@@ -52,13 +53,15 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="text-white">
                     <h1 class="text-5xl font-bold leading-tight mb-6 font-poppins">
-                        Welcome to Youdemy! Unlock Your Potential with Online Learning
+                        Welcome to 
+                        <a class="link link--kukuri" href="#" data-letters="Youdemy">Youdemy</a>
+                        ! Unlock Your Potential with Online Learning
                     </h1>
                     <p class="text-lg mb-8 text-white/90">
                         Explore a wide range of courses taught by expert instructors. Start your learning journey today.
                     </p>
                     <div class="flex gap-4">
-                        <a href="/courses" class="px-8 py-3 bg-white text-[#6b46c1] rounded-full hover:bg-gray-100 transition-colors font-semibold">
+                        <a href="#courses" class="px-8 py-3 bg-white text-[#6b46c1] rounded-full hover:bg-gray-100 transition-colors font-semibold">
                             Explore Courses
                         </a>
                         <a href="/register" class="px-8 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors font-medium">
@@ -66,7 +69,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="relative">
+                <div class="relativeX">
                     <img src="./assets/images/udemyLogo.png" alt="Online Learning" class="rounded-lg shadow-2xl">
                     <!-- You can add the rating overlay back if you want, but it might be better to just have the hero image -->
                 </div>
@@ -107,7 +110,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$99</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
@@ -117,7 +120,7 @@
             <!-- Data Science -->
             <div class="feature-card bg-white p-6 rounded-xl shadow-sm transition-all duration-300 group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
-                    <img src="https://dataexpertise.in/wp-content/uploads/2023/10/Data-Science-Must-have-Skills-e1697006962750-768x540.jpg" alt="Data Science Course Image" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="https://img.freepik.com/premium-photo/3d-flat-cartoon-data-scientist-analyzing-big-data-digital-transformation-data-scientist-wor_980716-174028.jpg?w=740">
                     <div class="absolute bottom-0 left-0 right-0 bg-[#6b46c1]/70 text-white p-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-xs font-medium">View More</span>
                     </div>
@@ -137,7 +140,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$149</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
@@ -146,7 +149,7 @@
             <!-- Digital Marketing -->
             <div class="feature-card bg-white p-6 rounded-xl shadow-sm transition-all duration-300 group">
                 <div class="relative overflow-hidden rounded-lg mb-4">
-                    <img src="https://www.optimalvirtualemployee.com/wp-content/uploads/2022/12/Web-Developer-skill-768x436.jpg" alt="Digital Marketing Course Image" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                    <img src="https://img.freepik.com/free-photo/content-configuration-creativity-digital-media_53876-124012.jpg?t=st=1737387773~exp=1737391373~hmac=402757508d1df74bd9e5fefdcffb454e7b7ba23df6bf84134a469818f78aad86&w=996">
                     <div class="absolute bottom-0 left-0 right-0 bg-[#6b46c1]/70 text-white p-2 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-xs font-medium">View More</span>
                     </div>
@@ -166,14 +169,14 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-[#6b46c1] font-bold">$79</span>
-                    <a href="#" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
+                    <a href="./../View/auth/login.php" class="text-[#6b46c1] hover:text-[#4f46e5] transition-colors font-medium">
                         View Course <span class="ml-1">→</span>
                     </a>
                 </div>
             </div>
         </div>
         <div class="text-center mt-12">
-            <a href="/courses" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
+            <a href="./../View/auth/login.php" class="inline-block px-8 py-3 bg-[#6b46c1] text-white rounded-full hover:bg-[#4f46e5] transition-colors font-semibold">
                 View All Courses
             </a>
         </div>
