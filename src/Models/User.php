@@ -59,8 +59,10 @@ class User {
         $user = $stml->fetch();
  
             if ($user && password_verify($password, $user['Password'])) {
-                session_start();
 
+
+                session_start();
+                
                 $_SESSION["userId"]=$user["UserID"];
                 $_SESSION["role"]=$user["Role"];
                 
