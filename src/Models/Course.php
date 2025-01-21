@@ -60,13 +60,31 @@ class Course {
         }
     }
 
-public function getVideoLink($courseID) {
-    $query = "SELECT VideoLink FROM courses WHERE CourseID = ?";
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute([$courseID]);
-    $result = $stmt->fetch();
-    return $result ? $result['VideoLink'] : null;
-}
+    public function getVideoLink($courseID) {
+        $query = "SELECT VideoLink FROM courses WHERE CourseID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$courseID]);
+        $result = $stmt->fetch();
+        return $result ? $result['VideoLink'] : null;
+    }
+
+    public function deleteCourse($courseID, $teacherID) {
+        try {
+            $query = "DELETE FROM Courses 
+                    WHERE CourseID = :courseID 
+                    AND TeacherID = :teacherID";
+                     
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                'courseID' => $courseID,
+                'teacherID' => $teacherID
+            ]);
+            
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting course: " . $e->getMessage());
+        }
+    }
 
 
 }

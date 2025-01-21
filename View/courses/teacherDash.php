@@ -35,6 +35,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error: " . $e->getMessage();
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if (isset($_POST['course_id'])) {
+        try {
+            $courseID = $_POST['course_id'];
+            $teacherID = $_SESSION['userId'];
+            
+            if ($course->deleteCourse($courseID, $teacherID)) {
+                header("Location: " . $_SERVER['PHP_SELF'] . "?message=deleted");
+                exit();
+            } else {
+                throw new Exception("Unable to delete course");
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,6 +101,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </nav>
+
+
+    <!-- delete message susses  -->
+    <?php if (isset($_GET['message'])): ?>
+    <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24"> -->
+        <?php if ($_GET['message'] === 'deleted'): ?>
+            <!-- <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline"> Course has been deleted successfully.</span>
+            </div> -->
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
 
     <!-- Hero Section -->
     <section class="hero-gradient text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -192,12 +223,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </svg>
                                     Edit
                                 </button>
-                                <button class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                    Delete
-                                </button>
+                            <form method="POST" action="" class="flex-1" onsubmit="return confirm('Are you sure you want to delete this course?');">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="course_id" value="<?php echo htmlspecialchars($course['CourseID']); ?>">
+                                    <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                        Delete
+                                    </button>
+                            </form>
                             </div>
                         </div>
                     </div>
