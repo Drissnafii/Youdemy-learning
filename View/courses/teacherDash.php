@@ -1,3 +1,12 @@
+<?php
+require __DIR__ . '/../../src/Models/Course.php';
+try {
+    $course = new Course();
+    $tags = $course->getAllTags();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,43 +106,60 @@
     <section id="create-course" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div class="max-w-3xl mx-auto">
             <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Create New Course</h2>
-            <form class="space-y-6 bg-white shadow-md rounded-lg p-6">
+            <form class="space-y-6 bg-white shadow-md rounded-lg p-6" method="POST" action="create_course.php" enctype="multipart/form-data">
+                <!-- Course Title -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Course Title</label>
-                    <input type="text"
+                    <input type="text" name="course_title"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
+
+                <!-- Description -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                    <textarea rows="4"
+                    <textarea rows="4" name="description"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
                 </div>
+
+                <!-- Content (Upload Files) -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Content (Upload Files)</label>
-                    <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <input type="file" name="course_content" class="w-full px-3 py-2 border border-gray-300 rounded-md">
                 </div>
+
+                <!-- Category -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                    <select
+                    <select name="category"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option>Web Development</option>
-                        <option>Mobile Development</option>
-                        <option>Data Science</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Data Science">Data Science</option>
                     </select>
                 </div>
+
+                <!-- Tags -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-                    <select multiple
+                    <select multiple name="tags[]"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option>HTML</option>
-                        <option>CSS</option>
-                        <option>JavaScript</option>
-                        <option>PHP</option>
+                        <?php if (!empty($tags)): ?>
+                            <?php foreach ($tags as $tag): ?>
+                                <option value="<?php echo htmlspecialchars($tag['TagID']); ?>">
+                                    <?php echo htmlspecialchars($tag['Name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option disabled>No tags available</option>
+                        <?php endif; ?>
                     </select>
                 </div>
+
+                <!-- Submit Button -->
                 <button type="submit"
-                    class="w-full bg-purple-700 text-white px-6 py-3 rounded-md font-medium hover:bg-purple-800">Create
-                    Course</button>
+                    class="w-full bg-purple-700 text-white px-6 py-3 rounded-md font-medium hover:bg-purple-800">
+                    Create Course
+                </button>
             </form>
         </div>
     </section>
