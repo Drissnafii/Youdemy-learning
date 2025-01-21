@@ -9,6 +9,17 @@ class Course {
         $this->conn = $db->connect();
     }
 
+    public function getAllCategories() {
+        try {
+            $query = "SELECT * FROM categories";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching categories: " . $e->getMessage());
+        }
+    }
+
     public function getAllTags() {
         try {
             $query = "SELECT * FROM tags";

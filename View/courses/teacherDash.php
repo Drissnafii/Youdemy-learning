@@ -6,6 +6,13 @@ try {
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
+
+try {
+    $course = new Course();
+    $categories = $course->getAllCategories();
+} catch (\Throwable $th) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,13 +135,20 @@ try {
                 </div>
 
                 <!-- Category -->
+                <!-- Category -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
                     <select name="category"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="Web Development">Web Development</option>
-                        <option value="Mobile Development">Mobile Development</option>
-                        <option value="Data Science">Data Science</option>
+                        <?php if (!empty($categories)): ?>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo htmlspecialchars($category['CategoryID']); ?>">
+                                    <?php echo htmlspecialchars($category['Name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option disabled>No categories available</option>
+                        <?php endif; ?>
                     </select>
                 </div>
 
