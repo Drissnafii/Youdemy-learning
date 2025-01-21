@@ -1,5 +1,12 @@
 <?php
 session_start();
+// if the user exist in the SESSION ==> You have the access , 
+if (isset($_SESSION['userId'])) {
+}else{
+    $loginPage = "http://" . 'localhost' . "/Youdemy-learning/View/auth/login.php";
+    header("location: $loginPage");
+}
+// else U dont have the access !
 require __DIR__ . '/../../src/Models/Course.php';
 
 try {
@@ -23,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $course->createCourse($title, $description, $categoryID, $teacherID, $videoLink);
-        echo "Course created successfully!";
+        return "Course created successfully!";
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -66,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="#my-courses" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
                     <a href="#create-course" class="text-gray-700 hover:text-purple-700 transition-colors">Create Course</a>
                     <a href="#statistics" class="text-gray-700 hover:text-purple-700 transition-colors">Statistics</a>
-                    <a href="#" class="text-red-600 hover:text-red-700">Logout</a>
+                    <a href="../../public/index.php?message=1" class="text-red-600 hover:text-red-700">Logout</a>
                 </div>
                 <button class="md:hidden text-gray-700 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,12 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             <?php endif; ?>
                             
-                            <!-- Course Status Badge -->
-                            <div class="absolute top-4 right-4">
-                                <span class="px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
-                                    Active
-                                </span>
-                            </div>
                         </div>
 
                         <!-- Course Content -->
@@ -228,7 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Create Course Section -->
     <section id="create-course" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Create New Course</h2>
             <form class="space-y-6 bg-white shadow-md rounded-lg p-6" method="POST" action="" enctype="multipart/form-data">
                 <!-- Course Title -->
                 <div>
