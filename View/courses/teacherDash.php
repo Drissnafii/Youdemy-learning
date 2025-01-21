@@ -73,9 +73,16 @@ try {
                     <a href="#create-course" class="bg-white bg-opacity-10 text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-20 transition-colors">Create Course</a>
                 </div>
             </div>
-            <div>
-                <img src="./../../public/assets/images/teacherrr.png" alt="Teaching Illustration" class="w-full rounded-lg shadow-xl">
+
+            <div class="ml-auto relative w-64 h-80 overflow-hidden rounded-xl shadow-lg group">
+                <img src="./../../public/assets/images/fahdd.jpg" alt="Teaching Illustration" class="absolute inset-0 w-full h-full object-cover transition duration-300 ease-in-out group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/50 transition duration-300 ease-in-out group-hover:bg-black/40"></div>
+                <div class="absolute bottom-4 left-4 text-white transition duration-300 ease-in-out group-hover:bottom-6">
+                    <h3 class="font-bold text-lg">Fahd Haourech</h3>
+                    <p class="text-sm">Mathematics</p>
+                </div>
             </div>
+
         </div>
     </section>
 
