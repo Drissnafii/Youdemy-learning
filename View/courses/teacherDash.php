@@ -48,7 +48,6 @@ try {
             <div class="flex justify-between items-center">
                 <a href="#" class="text-2xl font-bold text-purple-700 font-poppins">Youdemy</a>
                 <div class="hidden md:flex items-center space-x-8">
-                    <span class="text-gray-700">Welcome, Teacher Name!</span>
                     <a href="#my-courses" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
                     <a href="#create-course" class="text-gray-700 hover:text-purple-700 transition-colors">Create Course</a>
                     <a href="#statistics" class="text-gray-700 hover:text-purple-700 transition-colors">Statistics</a>
@@ -75,7 +74,7 @@ try {
                 </div>
             </div>
             <div>
-                <img src="./../../public/assets/images/udemyLogo.png" alt="Teaching Illustration" class="w-full rounded-lg shadow-xl">
+                <img src="./../../public/assets/images/teacherrr.png" alt="Teaching Illustration" class="w-full rounded-lg shadow-xl">
             </div>
         </div>
     </section>

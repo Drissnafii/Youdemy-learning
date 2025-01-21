@@ -51,10 +51,16 @@
                     <a href="#mycrss" class="bg-white bg-opacity-10 text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-20 transition-colors">My Courses</a>
                 </div>
             </div>
-            <div>
-                <img src="./../../public/assets/images/udemyLogo.png" alt="Learning Illustration" class="w-full rounded-lg shadow-xl">
+            <!-- User Image styling  -->
+            <div class="ml-auto group relative w-64 h-60 overflow-hidden rounded-lg shadow-xl">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse duration-5000"></div>
+                <img src="./../../public/assets/images/PngItem_800194 (1).png" alt="Learning Illustration" class="absolute inset-0 w-full h-full object-cover rounded-lg">
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 bg-black/20">
+                    <p class="text-white text-xl font-bold">Hover Text</p>
+                </div>
             </div>
-        </div>
+
+</div>
     </section>
 
     <!-- Featured Courses -->
