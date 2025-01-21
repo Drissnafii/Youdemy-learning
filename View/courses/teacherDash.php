@@ -1,550 +1,326 @@
+<?php
+session_start();
+require __DIR__ . '/../../src/Models/Course.php';
+
+try {
+    $course = new Course();
+    $tags = $course->getAllTags();
+    $categories = $course->getAllCategories();
+
+    // Fetch created courses 
+    $teacherID = $_SESSION['userId'];
+    $courses = $course->getCourses($teacherID);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['course_title'];
+    $description = $_POST['description'];
+    $categoryID = $_POST['category'];
+    $teacherID = $_SESSION['userId'];
+    $videoLink = $_POST['video_link'];
+
+    try {
+        $course->createCourse($title, $description, $categoryID, $teacherID, $videoLink);
+        echo "Course created successfully!";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard</title>
+    <title>Teacher Page - Youdemy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
-        :root {
-            --primary-bg: #fdf7f4;
-            --card-bg: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --accent-yellow: #ffd700;
-            --accent-purple: #6b46c1;
-            --border-color: #e5e7eb;
-            --danger: #dc3545;
-            --success: #28a745;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
         body {
-            background-color: var(--primary-bg);
-            padding: 20px;
+            font-family: 'Outfit', sans-serif;
         }
-
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 16px;
+        .hero-gradient {
+            background: linear-gradient(135deg, #6b46c1 0%, #4f46e5 100%);
         }
-
-         .header-left {
-             display: flex;
-             align-items: center;
-             gap: 16px;
-         }
-
-        .title {
-            font-size: 24px;
-            color: var(--text-primary);
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
-        .search-input {
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            width: 200px;
-        }
-
-        .search-toggle {
-              display: none;
-              background: none;
-              border: none;
-             font-size: 24px;
-             cursor: pointer;
-        }
-
-        .add-course-btn {
-             background-color: var(--accent-purple);
-             color: white;
-            border: none;
-            padding: 12px 24px;
-             border-radius: 8px;
-             cursor: pointer;
-            transition: opacity 0.2s;
-         }
-
-        .add-course-btn:hover {
-            opacity: 0.9;
-        }
-
-       .stats-grid {
-             display: grid;
-           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-             margin-bottom: 24px;
-         }
-
-         .stat-card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-         .stat-title {
-            color: var(--text-secondary);
-             font-size: 14px;
-            margin-bottom: 8px;
-         }
-
-       .stat-value {
-           font-size: 24px;
-             font-weight: bold;
-             color: var(--text-primary);
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-             gap: 20px;
-        }
-
-         .course-card {
-           background-color: var(--card-bg);
-             border-radius: 12px;
-             padding: 20px;
-             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-         }
-
-        .course-card:hover {
-           transform: translateY(-2px);
-             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-         }
-
-         .course-header {
-             display: flex;
-             justify-content: space-between;
-             align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
-         .course-title {
-            font-size: 18px;
-             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-         }
-
-        .course-description {
-             color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 16px;
-            line-height: 1.5;
-         }
-
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-             margin-bottom: 16px;
-        }
-
-         .course-status {
-           padding: 4px 12px;
-             border-radius: 16px;
-            font-size: 12px;
-           background-color: #e9ecef;
-       }
-
-        .status-active {
-            background-color: #d4edda;
-             color: #155724;
-        }
-
-        .course-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-             padding: 8px;
-             border: none;
-            border-radius: 6px;
-             cursor: pointer;
-             transition: opacity 0.2s;
-        }
-
-        .edit-btn {
-           background-color: var(--accent-yellow);
-           color: var(--text-primary);
-        }
-
-         .delete-btn {
-            background-color: var(--danger);
-            color: white;
-         }
-
-        .action-btn:hover {
-             opacity: 0.9;
-         }
-
-         .course-stats {
-           display: flex;
-             gap: 16px;
-           margin-top: 16px;
-             padding-top: 16px;
-           border-top: 1px solid var(--border-color);
-         }
-
-        .stat {
-            flex: 1;
-             text-align: center;
-        }
-
-        .stat-label {
-             font-size: 12px;
-            color: var(--text-secondary);
-             margin-bottom: 4px;
-        }
-
-        .course-form {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-             transform: translate(-50%, -50%);
-             background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-             width: 90%;
-            max-width: 500px;
-            z-index: 1000;
-         }
-
-       .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-         }
-
-        .form-input {
-           width: 100%;
-           padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-       }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-             gap: 12px;
-             margin-top: 24px;
-        }
-
-        .overlay {
-           display: none;
-             position: fixed;
-            top: 0;
-             left: 0;
-             width: 100%;
-           height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-
-        @media (max-width: 768px) {
-            .header, .header-left {
-                 flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .add-course-btn {
-               width: 100%;
-            }
-           
-           .search-bar {
-               display: none;
-            }
-
-            .search-toggle {
-                 display: block;
-            }
-
-             .courses-grid {
-                 grid-template-columns: 1fr;
-            }
-          
-           .course-meta {
-                flex-direction: column;
-                 align-items: flex-start;
-               gap: 8px;
-           }
-            
-             .stat-card {
-                text-align: center;
-            }
-          }
-
-          @media (max-width: 480px) {
-           .course-stats {
-              flex-direction: column;
-                align-items: stretch;
-            }
-           
-           .stat {
-                 padding: 8px 0;
-              border-bottom: 1px solid var(--border-color);
-            }
-            
-            .stat:last-child {
-             border-bottom: none;
-            }
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
-<body>
-    <div class="dashboard-container">
-        <div class="header">
-            <div class="header-left">
-                <h1 class="title">Course Management</h1>
-                <div class="search-bar">
-                   <input type="text" class="search-input" placeholder="Search courses..." oninput="searchCourses(this.value)" />
+
+<body class="font-outfit bg-gray-50 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-purple-700 font-poppins">Youdemy</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#my-courses" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
+                    <a href="#create-course" class="text-gray-700 hover:text-purple-700 transition-colors">Create Course</a>
+                    <a href="#statistics" class="text-gray-700 hover:text-purple-700 transition-colors">Statistics</a>
+                    <a href="#" class="text-red-600 hover:text-red-700">Logout</a>
                 </div>
-            </div>
-              <button class="add-course-btn" onclick="openCourseForm()">+ Add New Course</button>
-              <button class="search-toggle" onclick="toggleSearchBar()">☰</button>
-        </div>
-          <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-title">Total Courses</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-card">
-                 <div class="stat-title">Active Students</div>
-                 <div class="stat-value">248</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Average Rating</div>
-                <div class="stat-value">4.8</div>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
         </div>
-         <div class="courses-grid" id="coursesGrid">
-            <div class="course-card">
-                <div class="course-header">
-                    <div>
-                        <h3 class="course-title">Course 1</h3>
-                        <p class="course-description">This is a short description of course 1...</p>
-                   </div>
-                </div>
-                 <div class="course-meta">
-                     <span class="course-status status-active">Active</span>
-                     <div class="course-actions">
-                        <button class="action-btn edit-btn">✏️</button>
-                        <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                </div>
-                <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                        <div class="stat-value">10</div>
-                    </div>
-                    <div class="stat">
-                         <div class="stat-label">Lessons</div>
-                        <div class="stat-value">5</div>
-                     </div>
-                   <div class="stat">
-                       <div class="stat-label">Rating</div>
-                        <div class="stat-value">4.5</div>
-                     </div>
-                </div>
-           </div>
-           <div class="course-card">
-               <div class="course-header">
-                    <div>
-                        <h3 class="course-title">Course 2</h3>
-                         <p class="course-description">This is a short description of course 2...</p>
-                   </div>
-               </div>
-                <div class="course-meta">
-                    <span class="course-status status-active">Active</span>
-                    <div class="course-actions">
-                         <button class="action-btn edit-btn">✏️</button>
-                         <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                 </div>
-                 <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                       <div class="stat-value">23</div>
-                     </div>
-                     <div class="stat">
-                         <div class="stat-label">Lessons</div>
-                        <div class="stat-value">10</div>
-                     </div>
-                     <div class="stat">
-                         <div class="stat-label">Rating</div>
-                         <div class="stat-value">4.8</div>
-                     </div>
-                 </div>
-             </div>
-             <div class="course-card">
-                <div class="course-header">
-                    <div>
-                         <h3 class="course-title">Course 3</h3>
-                        <p class="course-description">This is a short description of course 3...</p>
-                    </div>
-                </div>
-                <div class="course-meta">
-                    <span class="course-status status-active">Active</span>
-                    <div class="course-actions">
-                         <button class="action-btn edit-btn">✏️</button>
-                         <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                </div>
-                 <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                        <div class="stat-value">12</div>
-                     </div>
-                    <div class="stat">
-                        <div class="stat-label">Lessons</div>
-                        <div class="stat-value">7</div>
-                    </div>
-                     <div class="stat">
-                       <div class="stat-label">Rating</div>
-                        <div class="stat-value">4.2</div>
-                    </div>
-               </div>
-           </div>
-           </div>
-    </div>
+    </nav>
 
-     <div class="overlay" id="overlay"></div>
-    <div class="course-form" id="courseForm">
-        <h2 style="margin-bottom: 20px;">Add New Course</h2>
-        <div class="form-group">
-            <label class="form-label">Course Title</label>
-            <input type="text" class="form-input" id="courseTitle" placeholder="Enter course title">
-         </div>
-        <div class="form-group">
-             <label class="form-label">Description</label>
-            <textarea class="form-input" id="courseDescription" rows="4" placeholder="Enter course description"></textarea>
-         </div>
-        <div class="form-group">
-             <label class="form-label">Category</label>
-            <select class="form-input" id="courseCategory">
-               <option>Web Development</option>
-                <option>Programming</option>
-               <option>Design</option>
-                 <option>Business</option>
-            </select>
-         </div>
-        <div class="form-actions">
-             <button class="action-btn" style="background-color: #e9ecef;" onclick="closeCourseForm()">Cancel</button>
-              <button class="action-btn" style="background-color: var(--accent-purple); color: white;" onclick="addCourse()">Save Course</button>
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 font-poppins">Welcome Back, Teacher Name!</h1>
+                <p class="text-lg opacity-90 mb-8">Manage your courses, track student progress, and create new content to inspire learners.</p>
+                <div class="flex space-x-4">
+                    <a href="#my-courses" class="bg-white text-purple-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">My Courses</a>
+                    <a href="#create-course" class="bg-white bg-opacity-10 text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-20 transition-colors">Create Course</a>
+                </div>
+            </div>
+
+            <div class="ml-auto relative w-64 h-80 overflow-hidden rounded-xl shadow-lg group">
+                <img src="./../../public/assets/images/fahdd.jpg" alt="Teaching Illustration" class="absolute inset-0 w-full h-full object-cover transition duration-300 ease-in-out group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/50 transition duration-300 ease-in-out group-hover:bg-black/40"></div>
+                <div class="absolute bottom-4 left-4 text-white transition duration-300 ease-in-out group-hover:bottom-6">
+                    <h3 class="font-bold text-lg">Fahd Haourech</h3>
+                    <p class="text-sm">Mathematics</p>
+                </div>
+            </div>
+
         </div>
-     </div>
+    </section>
 
-   <script>
-        // Open Course Form
-       function openCourseForm() {
-          document.getElementById('courseForm').style.display = 'block';
-           document.getElementById('overlay').style.display = 'block';
-        }
 
-        // Close Course Form
-        function closeCourseForm() {
-            document.getElementById('courseForm').style.display = 'none';
-             document.getElementById('overlay').style.display = 'none';
-        }
 
-         // Add New Course
-        function addCourse() {
-           const title = document.getElementById('courseTitle').value;
-           const description = document.getElementById('courseDescription').value;
-            const category = document.getElementById('courseCategory').value;
+    <!-- My Courses       -->
 
-           if (title && description && category) {
-                const courseCard = `
-                     <div class="course-card">
-                        <div class="course-header">
-                           <div>
-                                <h3 class="course-title">${title}</h3>
-                                <p class="course-description">${description}</p>
-                          </div>
+    <section id="my-courses" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section with Stats -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 font-poppins">My Courses</h2>
+                <p class="mt-2 text-gray-600">Manage and track your educational content</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <button class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Create New Course
+                </button>
+            </div>
+        </div>
+
+        <!-- Course Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <?php if (!empty($courses)): ?>
+                <?php foreach ($courses as $course): ?>
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                        <!-- Course Preview Image/Video -->
+                        <div class="relative">
+                            <?php if (!empty($course['VideoLink'])): ?>
+                                <div class="aspect-w-16 aspect-h-9">
+                                    <iframe 
+                                        src="<?php echo htmlspecialchars($course['VideoLink']); ?>"
+                                        class="w-full"
+                                        title="Course Video" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            <?php else: ?>
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 flex items-center justify-center">
+                                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Course Status Badge -->
+                            <div class="absolute top-4 right-4">
+                                <span class="px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
+                                    Active
+                                </span>
+                            </div>
                         </div>
-                      <div class="course-meta">
-                             <span class="course-status status-active">Active</span>
-                             <div class="course-actions">
-                                 <button class="action-btn edit-btn">✏️</button>
-                                <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                             </div>
-                         </div>
-                        <div class="course-stats">
-                           <div class="stat">
-                                <div class="stat-label">Students</div>
-                                <div class="stat-value">0</div>
-                             </div>
-                             <div class="stat">
-                                 <div class="stat-label">Lessons</div>
-                                 <div class="stat-value">0</div>
-                            </div>
-                             <div class="stat">
-                                 <div class="stat-label">Rating</div>
-                                  <div class="stat-value">0.0</div>
-                            </div>
-                      </div>
-                  </div>
-               `;
-             document.getElementById('coursesGrid').insertAdjacentHTML('beforeend', courseCard);
-                closeCourseForm();
-            } else {
-              alert('Please fill in all fields.');
-           }
-        }
-        
-        // Delete Course
-         function deleteCourse(button) {
-            const courseCard = button.closest('.course-card');
-            courseCard.remove();
-        }
-        
-         function toggleSearchBar() {
-              const searchBar = document.querySelector('.search-bar');
-              searchBar.style.display = searchBar.style.display === 'flex' ? 'none' : 'flex';
-         }
 
-        function searchCourses(query) {
-            const courseCards = document.querySelectorAll('.course-card');
-            const searchTerm = query.toLowerCase();
+                        <!-- Course Content -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                                <?php echo htmlspecialchars($course['Title']); ?>
+                            </h3>
+                            
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                <?php echo htmlspecialchars($course['Description']); ?>
+                            </p>
 
-            courseCards.forEach(card => {
-                const title = card.querySelector('.course-title').innerText.toLowerCase();
-               const description = card.querySelector('.course-description').innerText.toLowerCase();
-                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                 card.style.display = 'block';
-                } else {
-                     card.style.display = 'none';
-                 }
-           });
-         }
-    </script>
+                            <!-- Course Stats -->
+                            <div class="flex items-center space-x-6 mb-6">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                    <span><?php echo number_format($course['EnrolledStudents'] ?? 125); ?> students</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span><?php echo htmlspecialchars($course['Duration'] ?? '8 hours'); ?></span>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-3">
+                                <button class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Empty State -->
+                <div class="col-span-full flex flex-col items-center justify-center py-12 bg-white rounded-xl">
+                    <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
+                    <p class="text-gray-600 mb-4">Get started by creating your first course</p>
+                    <button class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Create Course
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+
+                    <!-- FORM  -->
+
+
+    <!-- Create Course Section -->
+    <section id="create-course" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Create New Course</h2>
+            <form class="space-y-6 bg-white shadow-md rounded-lg p-6" method="POST" action="" enctype="multipart/form-data">
+                <!-- Course Title -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Course Title</label>
+                    <input type="text" name="course_title"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea rows="4" name="description"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                </div>
+
+                <!-- Content (YouTube Video Link) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">YouTube Video Link</label>
+                    <input type="text" name="video_link" placeholder="Enter YouTube video URL (e.g., https://www.youtube.com/watch?v=abc123)"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                    <select name="category"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <?php if (!empty($categories)): ?>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo htmlspecialchars($category['CategoryID']); ?>">
+                                    <?php echo htmlspecialchars($category['Name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option disabled>No categories available</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <!-- Tags -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                    <select multiple name="tags[]"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <?php if (!empty($tags)): ?>
+                            <?php foreach ($tags as $tag): ?>
+                                <option value="<?php echo htmlspecialchars($tag['TagID']); ?>">
+                                    <?php echo htmlspecialchars($tag['Name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option disabled>No tags available</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full bg-purple-700 text-white px-6 py-3 rounded-md font-medium hover:bg-purple-800">
+                    Create Course
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="statistics" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Statistics</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Courses</h3>
+                    <p class="text-3xl font-bold text-purple-700">12</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Students</h3>
+                    <p class="text-3xl font-bold text-purple-700">1,250</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="text-gray-400 mb-4">© 2025 Youdemy. All rights reserved.</div>
+            <div>
+                <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors mx-4">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors mx-4">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>

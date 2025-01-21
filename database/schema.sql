@@ -51,3 +51,7 @@ CREATE TABLE Enrollments (
     FOREIGN KEY (StudentID) REFERENCES Users(UserID),
     FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
 );
+
+-- Modifecation ..
+ALTER TABLE Courses
+ADD COLUMN VideoLink VARCHAR(255);
