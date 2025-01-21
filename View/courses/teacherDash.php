@@ -1,17 +1,32 @@
 <?php
+session_start();
 require __DIR__ . '/../../src/Models/Course.php';
+
 try {
     $course = new Course();
     $tags = $course->getAllTags();
+    $categories = $course->getAllCategories();
+
+    // Fetch created courses 
+    $teacherID = $_SESSION['userId'];
+    $courses = $course->getCourses($teacherID);
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
 
-try {
-    $course = new Course();
-    $categories = $course->getAllCategories();
-} catch (\Throwable $th) {
-    echo "Error: " . $e->getMessage();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['course_title'];
+    $description = $_POST['description'];
+    $categoryID = $_POST['category'];
+    $teacherID = $_SESSION['userId'];
+    $videoLink = $_POST['video_link'];
+
+    try {
+        $course->createCourse($title, $description, $categoryID, $teacherID, $videoLink);
+        echo "Course created successfully!";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -86,40 +101,135 @@ try {
         </div>
     </section>
 
-    <!-- My Courses Section -->
-    <section id="my-courses" class="py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">My Courses</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Course Card -->
-                <div class="feature-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Introduction to Web Development</h2>
-                    <p class="text-gray-600 mb-4">Learn the basics of HTML, CSS, and JavaScript...</p>
-                    <div class="flex items-center text-sm text-gray-500 mb-4">
-                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-                            </path>
-                        </svg>
-                        <span>125 students enrolled</span>
-                    </div>
-                    <div class="flex space-x-3">
-                        <a href="#"
-                            class="flex-1 bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-800 text-center">Edit</a>
-                        <a href="#"
-                            class="flex-1 bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 text-center">Delete</a>
-                    </div>
-                </div>
-                <!-- Additional course cards -->
+
+
+    <!-- My Courses       -->
+
+    <section id="my-courses" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section with Stats -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 font-poppins">My Courses</h2>
+                <p class="mt-2 text-gray-600">Manage and track your educational content</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <button class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Create New Course
+                </button>
             </div>
         </div>
-    </section>
+
+        <!-- Course Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <?php if (!empty($courses)): ?>
+                <?php foreach ($courses as $course): ?>
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                        <!-- Course Preview Image/Video -->
+                        <div class="relative">
+                            <?php if (!empty($course['VideoLink'])): ?>
+                                <div class="aspect-w-16 aspect-h-9">
+                                    <iframe 
+                                        src="<?php echo htmlspecialchars($course['VideoLink']); ?>"
+                                        class="w-full"
+                                        title="Course Video" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            <?php else: ?>
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 flex items-center justify-center">
+                                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Course Status Badge -->
+                            <div class="absolute top-4 right-4">
+                                <span class="px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
+                                    Active
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Course Content -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                                <?php echo htmlspecialchars($course['Title']); ?>
+                            </h3>
+                            
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                <?php echo htmlspecialchars($course['Description']); ?>
+                            </p>
+
+                            <!-- Course Stats -->
+                            <div class="flex items-center space-x-6 mb-6">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                    <span><?php echo number_format($course['EnrolledStudents'] ?? 125); ?> students</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span><?php echo htmlspecialchars($course['Duration'] ?? '8 hours'); ?></span>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-3">
+                                <button class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Empty State -->
+                <div class="col-span-full flex flex-col items-center justify-center py-12 bg-white rounded-xl">
+                    <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
+                    <p class="text-gray-600 mb-4">Get started by creating your first course</p>
+                    <button class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Create Course
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+
+                    <!-- FORM  -->
+
 
     <!-- Create Course Section -->
     <section id="create-course" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div class="max-w-3xl mx-auto">
             <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Create New Course</h2>
-            <form class="space-y-6 bg-white shadow-md rounded-lg p-6" method="POST" action="create_course.php" enctype="multipart/form-data">
+            <form class="space-y-6 bg-white shadow-md rounded-lg p-6" method="POST" action="" enctype="multipart/form-data">
                 <!-- Course Title -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Course Title</label>
@@ -141,7 +251,6 @@ try {
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
 
-                <!-- Category -->
                 <!-- Category -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>

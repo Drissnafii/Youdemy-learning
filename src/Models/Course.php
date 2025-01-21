@@ -30,4 +30,43 @@ class Course {
             throw new Exception("Error fetching tags: " . $e->getMessage());
         }
     }
+
+    public function createCourse($title, $description, $categoryID, $teacherID, $videoLink) {
+        try {
+            $query = "INSERT INTO Courses (Title, Description, CategoryID, TeacherID, VideoLink)
+                      VALUES (:title, :description, :categoryID, :teacherID, :videoLink)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                'title' => $title,
+                'description' => $description,
+                'categoryID' => $categoryID,
+                'teacherID' => $teacherID,
+                'videoLink' => $videoLink,
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Error creating course: " . $e->getMessage());
+        }
+    }
+
+    public function getCourses($teacherID) {
+        try {
+            $query = "SELECT * FROM Courses WHERE TeacherID = :teacherID";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute(['teacherID' => $teacherID]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching courses: " . $e->getMessage());
+        }
+    }
+
+public function getVideoLink($courseID) {
+    $query = "SELECT VideoLink FROM courses WHERE CourseID = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute([$courseID]);
+    $result = $stmt->fetch();
+    return $result ? $result['VideoLink'] : null;
+}
+
+
 }
