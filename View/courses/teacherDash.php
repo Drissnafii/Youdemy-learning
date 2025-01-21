@@ -134,10 +134,11 @@ try {
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
                 </div>
 
-                <!-- Content (Upload Files) -->
+                <!-- Content (YouTube Video Link) -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Content (Upload Files)</label>
-                    <input type="file" name="course_content" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">YouTube Video Link</label>
+                    <input type="text" name="video_link" placeholder="Enter YouTube video URL (e.g., https://www.youtube.com/watch?v=abc123)"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
 
                 <!-- Category -->
