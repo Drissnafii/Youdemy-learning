@@ -60,12 +60,11 @@ class Course {
         }
     }
 
-public function getVideoLink($courseID) {
-    $query = "SELECT VideoLink FROM courses WHERE CourseID = ?";
+public function getCourses($teacherID) {
+    $query = "SELECT CourseID, Title, Description, VideoLink FROM courses WHERE TeacherID = ?";
     $stmt = $this->conn->prepare($query);
-    $stmt->execute([$courseID]);
-    $result = $stmt->fetch();
-    return $result ? $result['VideoLink'] : null;
+    $stmt->execute([$teacherID]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Assuming you're using PDO
 }
 
 
