@@ -66,17 +66,21 @@ class User {
                 
 
                 if($user["Role"]==="admin"){
-                    echo "admin";
+                    $adminPage = "http://" . 'localhost' . "/Youdemy-learning/View/admin/dashboard.php";
+                    header("location: $adminPage");
+
                 }else if($user["Role"]==="teacher"){
                     echo "teacher";
+                    $teacherPage = "http://" . 'localhost' . "/Youdemy-learning/View/courses/teacherDash.php";
+                    header("location: $teacherPage");
+
                 }else if($user["Role"]==="student"){
                     $catalogPage = "http://" . 'localhost' . "/Youdemy-learning/View/courses/catalog.php";
                     header("location: $catalogPage");
                 }else{
 
                 }
-
-
+                
             }
         return "Les donne est incorrect";
     }
