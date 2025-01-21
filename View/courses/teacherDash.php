@@ -1,550 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard</title>
+    <title>Teacher Page - Youdemy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
-        :root {
-            --primary-bg: #fdf7f4;
-            --card-bg: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --accent-yellow: #ffd700;
-            --accent-purple: #6b46c1;
-            --border-color: #e5e7eb;
-            --danger: #dc3545;
-            --success: #28a745;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
         body {
-            background-color: var(--primary-bg);
-            padding: 20px;
+            font-family: 'Outfit', sans-serif;
         }
-
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 16px;
+        .hero-gradient {
+            background: linear-gradient(135deg, #6b46c1 0%, #4f46e5 100%);
         }
-
-         .header-left {
-             display: flex;
-             align-items: center;
-             gap: 16px;
-         }
-
-        .title {
-            font-size: 24px;
-            color: var(--text-primary);
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
-        .search-input {
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            width: 200px;
-        }
-
-        .search-toggle {
-              display: none;
-              background: none;
-              border: none;
-             font-size: 24px;
-             cursor: pointer;
-        }
-
-        .add-course-btn {
-             background-color: var(--accent-purple);
-             color: white;
-            border: none;
-            padding: 12px 24px;
-             border-radius: 8px;
-             cursor: pointer;
-            transition: opacity 0.2s;
-         }
-
-        .add-course-btn:hover {
-            opacity: 0.9;
-        }
-
-       .stats-grid {
-             display: grid;
-           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-             margin-bottom: 24px;
-         }
-
-         .stat-card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-         .stat-title {
-            color: var(--text-secondary);
-             font-size: 14px;
-            margin-bottom: 8px;
-         }
-
-       .stat-value {
-           font-size: 24px;
-             font-weight: bold;
-             color: var(--text-primary);
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-             gap: 20px;
-        }
-
-         .course-card {
-           background-color: var(--card-bg);
-             border-radius: 12px;
-             padding: 20px;
-             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-         }
-
-        .course-card:hover {
-           transform: translateY(-2px);
-             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-         }
-
-         .course-header {
-             display: flex;
-             justify-content: space-between;
-             align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
-         .course-title {
-            font-size: 18px;
-             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-         }
-
-        .course-description {
-             color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 16px;
-            line-height: 1.5;
-         }
-
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-             margin-bottom: 16px;
-        }
-
-         .course-status {
-           padding: 4px 12px;
-             border-radius: 16px;
-            font-size: 12px;
-           background-color: #e9ecef;
-       }
-
-        .status-active {
-            background-color: #d4edda;
-             color: #155724;
-        }
-
-        .course-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-             padding: 8px;
-             border: none;
-            border-radius: 6px;
-             cursor: pointer;
-             transition: opacity 0.2s;
-        }
-
-        .edit-btn {
-           background-color: var(--accent-yellow);
-           color: var(--text-primary);
-        }
-
-         .delete-btn {
-            background-color: var(--danger);
-            color: white;
-         }
-
-        .action-btn:hover {
-             opacity: 0.9;
-         }
-
-         .course-stats {
-           display: flex;
-             gap: 16px;
-           margin-top: 16px;
-             padding-top: 16px;
-           border-top: 1px solid var(--border-color);
-         }
-
-        .stat {
-            flex: 1;
-             text-align: center;
-        }
-
-        .stat-label {
-             font-size: 12px;
-            color: var(--text-secondary);
-             margin-bottom: 4px;
-        }
-
-        .course-form {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-             transform: translate(-50%, -50%);
-             background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-             width: 90%;
-            max-width: 500px;
-            z-index: 1000;
-         }
-
-       .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-         }
-
-        .form-input {
-           width: 100%;
-           padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-       }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-             gap: 12px;
-             margin-top: 24px;
-        }
-
-        .overlay {
-           display: none;
-             position: fixed;
-            top: 0;
-             left: 0;
-             width: 100%;
-           height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-
-        @media (max-width: 768px) {
-            .header, .header-left {
-                 flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .add-course-btn {
-               width: 100%;
-            }
-           
-           .search-bar {
-               display: none;
-            }
-
-            .search-toggle {
-                 display: block;
-            }
-
-             .courses-grid {
-                 grid-template-columns: 1fr;
-            }
-          
-           .course-meta {
-                flex-direction: column;
-                 align-items: flex-start;
-               gap: 8px;
-           }
-            
-             .stat-card {
-                text-align: center;
-            }
-          }
-
-          @media (max-width: 480px) {
-           .course-stats {
-              flex-direction: column;
-                align-items: stretch;
-            }
-           
-           .stat {
-                 padding: 8px 0;
-              border-bottom: 1px solid var(--border-color);
-            }
-            
-            .stat:last-child {
-             border-bottom: none;
-            }
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
-<body>
-    <div class="dashboard-container">
-        <div class="header">
-            <div class="header-left">
-                <h1 class="title">Course Management</h1>
-                <div class="search-bar">
-                   <input type="text" class="search-input" placeholder="Search courses..." oninput="searchCourses(this.value)" />
+
+<body class="font-outfit bg-gray-50 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-purple-700 font-poppins">Youdemy</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <span class="text-gray-700">Welcome, Teacher Name!</span>
+                    <a href="#my-courses" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
+                    <a href="#create-course" class="text-gray-700 hover:text-purple-700 transition-colors">Create Course</a>
+                    <a href="#statistics" class="text-gray-700 hover:text-purple-700 transition-colors">Statistics</a>
+                    <a href="#" class="text-red-600 hover:text-red-700">Logout</a>
                 </div>
-            </div>
-              <button class="add-course-btn" onclick="openCourseForm()">+ Add New Course</button>
-              <button class="search-toggle" onclick="toggleSearchBar()">☰</button>
-        </div>
-          <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-title">Total Courses</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-card">
-                 <div class="stat-title">Active Students</div>
-                 <div class="stat-value">248</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Average Rating</div>
-                <div class="stat-value">4.8</div>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
         </div>
-         <div class="courses-grid" id="coursesGrid">
-            <div class="course-card">
-                <div class="course-header">
-                    <div>
-                        <h3 class="course-title">Course 1</h3>
-                        <p class="course-description">This is a short description of course 1...</p>
-                   </div>
-                </div>
-                 <div class="course-meta">
-                     <span class="course-status status-active">Active</span>
-                     <div class="course-actions">
-                        <button class="action-btn edit-btn">✏️</button>
-                        <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                </div>
-                <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                        <div class="stat-value">10</div>
-                    </div>
-                    <div class="stat">
-                         <div class="stat-label">Lessons</div>
-                        <div class="stat-value">5</div>
-                     </div>
-                   <div class="stat">
-                       <div class="stat-label">Rating</div>
-                        <div class="stat-value">4.5</div>
-                     </div>
-                </div>
-           </div>
-           <div class="course-card">
-               <div class="course-header">
-                    <div>
-                        <h3 class="course-title">Course 2</h3>
-                         <p class="course-description">This is a short description of course 2...</p>
-                   </div>
-               </div>
-                <div class="course-meta">
-                    <span class="course-status status-active">Active</span>
-                    <div class="course-actions">
-                         <button class="action-btn edit-btn">✏️</button>
-                         <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                 </div>
-                 <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                       <div class="stat-value">23</div>
-                     </div>
-                     <div class="stat">
-                         <div class="stat-label">Lessons</div>
-                        <div class="stat-value">10</div>
-                     </div>
-                     <div class="stat">
-                         <div class="stat-label">Rating</div>
-                         <div class="stat-value">4.8</div>
-                     </div>
-                 </div>
-             </div>
-             <div class="course-card">
-                <div class="course-header">
-                    <div>
-                         <h3 class="course-title">Course 3</h3>
-                        <p class="course-description">This is a short description of course 3...</p>
-                    </div>
-                </div>
-                <div class="course-meta">
-                    <span class="course-status status-active">Active</span>
-                    <div class="course-actions">
-                         <button class="action-btn edit-btn">✏️</button>
-                         <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                    </div>
-                </div>
-                 <div class="course-stats">
-                    <div class="stat">
-                        <div class="stat-label">Students</div>
-                        <div class="stat-value">12</div>
-                     </div>
-                    <div class="stat">
-                        <div class="stat-label">Lessons</div>
-                        <div class="stat-value">7</div>
-                    </div>
-                     <div class="stat">
-                       <div class="stat-label">Rating</div>
-                        <div class="stat-value">4.2</div>
-                    </div>
-               </div>
-           </div>
-           </div>
-    </div>
+    </nav>
 
-     <div class="overlay" id="overlay"></div>
-    <div class="course-form" id="courseForm">
-        <h2 style="margin-bottom: 20px;">Add New Course</h2>
-        <div class="form-group">
-            <label class="form-label">Course Title</label>
-            <input type="text" class="form-input" id="courseTitle" placeholder="Enter course title">
-         </div>
-        <div class="form-group">
-             <label class="form-label">Description</label>
-            <textarea class="form-input" id="courseDescription" rows="4" placeholder="Enter course description"></textarea>
-         </div>
-        <div class="form-group">
-             <label class="form-label">Category</label>
-            <select class="form-input" id="courseCategory">
-               <option>Web Development</option>
-                <option>Programming</option>
-               <option>Design</option>
-                 <option>Business</option>
-            </select>
-         </div>
-        <div class="form-actions">
-             <button class="action-btn" style="background-color: #e9ecef;" onclick="closeCourseForm()">Cancel</button>
-              <button class="action-btn" style="background-color: var(--accent-purple); color: white;" onclick="addCourse()">Save Course</button>
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 font-poppins">Welcome Back, Teacher Name!</h1>
+                <p class="text-lg opacity-90 mb-8">Manage your courses, track student progress, and create new content to inspire learners.</p>
+                <div class="flex space-x-4">
+                    <a href="#my-courses" class="bg-white text-purple-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">My Courses</a>
+                    <a href="#create-course" class="bg-white bg-opacity-10 text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-20 transition-colors">Create Course</a>
+                </div>
+            </div>
+            <div>
+                <img src="./../../public/assets/images/udemyLogo.png" alt="Teaching Illustration" class="w-full rounded-lg shadow-xl">
+            </div>
         </div>
-     </div>
+    </section>
 
-   <script>
-        // Open Course Form
-       function openCourseForm() {
-          document.getElementById('courseForm').style.display = 'block';
-           document.getElementById('overlay').style.display = 'block';
-        }
+    <!-- My Courses Section -->
+    <section id="my-courses" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">My Courses</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Course Card -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Introduction to Web Development</h2>
+                    <p class="text-gray-600 mb-4">Learn the basics of HTML, CSS, and JavaScript...</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        <span>125 students enrolled</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a href="#"
+                            class="flex-1 bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-800 text-center">Edit</a>
+                        <a href="#"
+                            class="flex-1 bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 text-center">Delete</a>
+                    </div>
+                </div>
+                <!-- Additional course cards -->
+            </div>
+        </div>
+    </section>
 
-        // Close Course Form
-        function closeCourseForm() {
-            document.getElementById('courseForm').style.display = 'none';
-             document.getElementById('overlay').style.display = 'none';
-        }
+    <!-- Create Course Section -->
+    <section id="create-course" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Create New Course</h2>
+            <form class="space-y-6 bg-white shadow-md rounded-lg p-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Course Title</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea rows="4"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Content (Upload Files)</label>
+                    <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                    <select
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option>Web Development</option>
+                        <option>Mobile Development</option>
+                        <option>Data Science</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                    <select multiple
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option>HTML</option>
+                        <option>CSS</option>
+                        <option>JavaScript</option>
+                        <option>PHP</option>
+                    </select>
+                </div>
+                <button type="submit"
+                    class="w-full bg-purple-700 text-white px-6 py-3 rounded-md font-medium hover:bg-purple-800">Create
+                    Course</button>
+            </form>
+        </div>
+    </section>
 
-         // Add New Course
-        function addCourse() {
-           const title = document.getElementById('courseTitle').value;
-           const description = document.getElementById('courseDescription').value;
-            const category = document.getElementById('courseCategory').value;
+    <!-- Statistics Section -->
+    <section id="statistics" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 font-poppins">Statistics</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Courses</h3>
+                    <p class="text-3xl font-bold text-purple-700">12</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Students</h3>
+                    <p class="text-3xl font-bold text-purple-700">1,250</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-           if (title && description && category) {
-                const courseCard = `
-                     <div class="course-card">
-                        <div class="course-header">
-                           <div>
-                                <h3 class="course-title">${title}</h3>
-                                <p class="course-description">${description}</p>
-                          </div>
-                        </div>
-                      <div class="course-meta">
-                             <span class="course-status status-active">Active</span>
-                             <div class="course-actions">
-                                 <button class="action-btn edit-btn">✏️</button>
-                                <button class="action-btn delete-btn" onclick="deleteCourse(this)">🗑️</button>
-                             </div>
-                         </div>
-                        <div class="course-stats">
-                           <div class="stat">
-                                <div class="stat-label">Students</div>
-                                <div class="stat-value">0</div>
-                             </div>
-                             <div class="stat">
-                                 <div class="stat-label">Lessons</div>
-                                 <div class="stat-value">0</div>
-                            </div>
-                             <div class="stat">
-                                 <div class="stat-label">Rating</div>
-                                  <div class="stat-value">0.0</div>
-                            </div>
-                      </div>
-                  </div>
-               `;
-             document.getElementById('coursesGrid').insertAdjacentHTML('beforeend', courseCard);
-                closeCourseForm();
-            } else {
-              alert('Please fill in all fields.');
-           }
-        }
-        
-        // Delete Course
-         function deleteCourse(button) {
-            const courseCard = button.closest('.course-card');
-            courseCard.remove();
-        }
-        
-         function toggleSearchBar() {
-              const searchBar = document.querySelector('.search-bar');
-              searchBar.style.display = searchBar.style.display === 'flex' ? 'none' : 'flex';
-         }
-
-        function searchCourses(query) {
-            const courseCards = document.querySelectorAll('.course-card');
-            const searchTerm = query.toLowerCase();
-
-            courseCards.forEach(card => {
-                const title = card.querySelector('.course-title').innerText.toLowerCase();
-               const description = card.querySelector('.course-description').innerText.toLowerCase();
-                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                 card.style.display = 'block';
-                } else {
-                     card.style.display = 'none';
-                 }
-           });
-         }
-    </script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="text-gray-400 mb-4">© 2025 Youdemy. All rights reserved.</div>
+            <div>
+                <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors mx-4">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-gray-300 transition-colors mx-4">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
