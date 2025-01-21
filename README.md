@@ -41,4 +41,4 @@ youdemy/
 
 ## 🔗 Important Links
 - [JIRA PLanning](https://amineyoucode.atlassian.net/jira/software/projects/YD/summary)
-- [Project Presentation](later...)
+- [Project Presentation](https://www.canva.com/design/DAGcz_8_Umw/SCTVgtEordL7G9yQspy-hg/edit?utm_content=DAGcz_8_Umw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
