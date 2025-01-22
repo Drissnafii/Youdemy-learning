@@ -30,7 +30,6 @@ class Course {
             throw new Exception("Error fetching tags: " . $e->getMessage());
         }
     }
-
     public function createCourse($title, $description, $categoryID, $teacherID, $videoLink) {
         try {
             $query = "INSERT INTO Courses (Title, Description, CategoryID, TeacherID, VideoLink)
@@ -48,7 +47,6 @@ class Course {
             throw new Exception("Error creating course: " . $e->getMessage());
         }
     }
-
     public function getCourses($teacherID) {
         try {
             $query = "SELECT * FROM Courses WHERE TeacherID = :teacherID";
