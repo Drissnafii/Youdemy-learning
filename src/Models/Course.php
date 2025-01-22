@@ -30,7 +30,6 @@ class Course {
             throw new Exception("Error fetching tags: " . $e->getMessage());
         }
     }
-
     public function createCourse($title, $description, $categoryID, $teacherID, $videoLink) {
         try {
             $query = "INSERT INTO Courses (Title, Description, CategoryID, TeacherID, VideoLink)
@@ -48,7 +47,6 @@ class Course {
             throw new Exception("Error creating course: " . $e->getMessage());
         }
     }
-
     public function getCourses($teacherID) {
         try {
             $query = "SELECT * FROM Courses WHERE TeacherID = :teacherID";
@@ -60,12 +58,42 @@ class Course {
         }
     }
 
-public function getCourses($teacherID) {
-    $query = "SELECT CourseID, Title, Description, VideoLink FROM courses WHERE TeacherID = ?";
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute([$teacherID]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Assuming you're using PDO
-}
+    public function getVideoLink($courseID) {
+        $query = "SELECT VideoLink FROM courses WHERE CourseID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$courseID]);
+        $result = $stmt->fetch();
+        return $result ? $result['VideoLink'] : null;
+    }
 
+    public function deleteCourse($courseID, $teacherID) {
+        try {
+            $query = "DELETE FROM Courses 
+                    WHERE CourseID = :courseID 
+                    AND TeacherID = :teacherID";
+                     
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                'courseID' => $courseID,
+                'teacherID' => $teacherID
+            ]);
+            
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting course: " . $e->getMessage());
+        }
+    }
+
+
+    public function studentCourses() {
+        try {
+            $query = "SELECT * FROM Courses";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching courses: " . $e->getMessage());
+        }
+    }
 
 }
