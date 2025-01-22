@@ -1,3 +1,13 @@
+<?php
+require __DIR__ . '/../../src/Models/Course.php';
+
+try {
+    $course = new Course();
+    $courses = $course->studentCourses();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +39,7 @@
         <div class="hidden md:flex items-center space-x-8">
             <a href="#CoursesF" class="text-gray-700 hover:text-purple-700 transition-colors">Courses</a>
             <a href="#mycrss" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
-            <a href="./../courses/catalog.php" class="bg-purple-700 text-white px-6 py-2 rounded-full font-medium hover:bg-purple-800 transition-colors">Logout</a>
+            <a href="./../auth/login.php" class="bg-purple-700 text-white px-6 py-2 rounded-full font-medium hover:bg-purple-800 transition-colors">Logout</a>
         </div>
         <!-- Mobile Menu Button (Hamburger Icon) -->
         <button class="md:hidden p-2 focus:outline-none">
@@ -65,39 +75,30 @@
 
     <!-- Featured Courses -->
     <section id="CoursesF" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4 font-poppins">Featured Courses</h2>
-                <p class="text-gray-700 max-w-2xl mx-auto">Check out the most popular courses or find your next learning adventure.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php foreach ($courses as $course): ?>
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-md">
+            <?php if (!empty($course['VideoLink'])): ?>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe src="<?php echo htmlspecialchars($course['VideoLink']); ?>" class="w-full" frameborder="0" allowfullscreen></iframe>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Course Card -->
-                <div class="feature-card bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                    <div class="relative overflow-hidden">
-                        <img src="/api/placeholder/400/225" alt="Course Image" class="w-full h-auto">
-                        <div class="absolute inset-0 bg-purple-700 bg-opacity-70 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-sm font-medium text-white">View More</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 font-poppins">Web Development</h3>
-                        <p class="text-gray-700 mb-4">Learn to build modern web applications with the latest technologies.</p>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-gray-700">By John Doe</span>
-                            <div>
-                                <span class="text-yellow-600">★</span>
-                                <span class="text-gray-700">4.8 (1,234)</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-purple-700 font-bold">$99.99</span>
-                            <a href="#" class="text-purple-700 font-medium hover:text-purple-800 transition-colors">View Course →</a>
-                        </div>
-                    </div>
+                <?php endif; ?>
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">
+                        <?php echo htmlspecialchars($course['Title']); ?>
+                    </h3>
+                    <p class="text-gray-600 mb-4">
+                        <?php echo htmlspecialchars($course['Description']); ?>
+                    </p>
+                    <a href="course-details.php?id=<?php echo $course['CourseID']; ?>" 
+                    class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
+                        View Course
+                    </a>
                 </div>
-                <!-- Additional course cards with the same structure -->
             </div>
-        </div>
+        <?php endforeach; ?>
+    </div>
     </section>
 
     <!-- My Courses Section -->

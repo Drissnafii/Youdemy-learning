@@ -85,4 +85,15 @@ class Course {
     }
 
 
+    public function studentCourses() {
+        try {
+            $query = "SELECT * FROM Courses";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching courses: " . $e->getMessage());
+        }
+    }
+
 }
