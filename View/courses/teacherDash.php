@@ -91,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <a href="#my-courses" class="text-gray-700 hover:text-purple-700 transition-colors">My Courses</a>
                     <a href="#create-course" class="text-gray-700 hover:text-purple-700 transition-colors">Create Course</a>
                     <a href="#statistics" class="text-gray-700 hover:text-purple-700 transition-colors">Statistics</a>
+
                     <a href="./../auth/login.php" class="text-red-600 hover:text-red-700">Logout</a>
+
                 </div>
                 <button class="md:hidden text-gray-700 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
