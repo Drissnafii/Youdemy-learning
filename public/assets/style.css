@@ -2,6 +2,7 @@ body {
     font-family: 'Outfit', sans-serif;
 }
 
+
 main {
     background-color: #8878C3;
 }
@@ -155,4 +156,10 @@ h1, h2, h3, h4, h5, h6, input, label, button {
 
 .link--kukuri:hover::before {
 	width: 100%;
+}
+
+.role-option input:checked + div {
+    border-color: #A294F9;
+    background-color: #F5EFFF;
+    box-shadow: 0 4px 6px rgba(162, 148, 249, 0.2);
 }
