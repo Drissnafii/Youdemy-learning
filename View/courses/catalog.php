@@ -73,33 +73,48 @@ try {
 </div>
     </section>
 
-    <!-- Featured Courses -->
-    <section id="CoursesF" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
+<!-- Featured Courses -->
+<section id="CoursesF" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12 font-poppins text-center">Featured Courses</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <?php foreach ($courses as $course): ?>
-            <div class="bg-white rounded-xl shadow-sm hover:shadow-md">
-            <?php if (!empty($course['VideoLink'])): ?>
-            <div class="aspect-w-16 aspect-h-9">
-                <iframe src="<?php echo htmlspecialchars($course['VideoLink']); ?>" class="w-full" frameborder="0" allowfullscreen></iframe>
-            </div>
-                <?php endif; ?>
-                
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">
-                        <?php echo htmlspecialchars($course['Title']); ?>
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        <?php echo htmlspecialchars($course['Description']); ?>
-                    </p>
-                    <a href="course-details.php?id=<?php echo $course['CourseID']; ?>" 
-                    class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
-                        View Course
-                    </a>
+            <?php foreach ($courses as $course): ?>
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <?php if (!empty($course['VideoLink'])): ?>
+                        <!-- Custom Width and Height for YouTube Video -->
+                        <div class="w-full overflow-hidden rounded-t-xl">
+                            <iframe 
+                                src="<?php echo htmlspecialchars($course['VideoLink']); ?>" 
+                                class="w-full h-48 sm:h-64 lg:h-48" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">
+                            <?php echo htmlspecialchars($course['Title']); ?>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            <?php echo htmlspecialchars($course['Description']); ?>
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <a href="course-details.php?id=<?php echo $course['CourseID']; ?>" 
+                               class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors duration-300">
+                                View Course
+                            </a>
+                            <span class="text-sm text-gray-500">
+                                <?php echo isset($course['Duration']) ? htmlspecialchars($course['Duration']) : 'N/A'; ?>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-    </section>
+</section>
 
     <!-- My Courses Section -->
     <section id="mycrss" class="py-16 px-4 sm:px-6 lg:px-8">

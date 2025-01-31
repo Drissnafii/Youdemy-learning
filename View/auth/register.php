@@ -88,11 +88,73 @@
                     </button>
                 </div>
 
-                <!-- Role field  -->
-                <select name="role" id="role" required>
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                </select>
+        <!-- Role Selection -->
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-3 text-center">Select Your Role</label>
+            <div class="grid grid-cols-2 gap-4">
+                <label class="role-option">
+                    <input 
+                        type="radio" 
+                        name="role" 
+                        value="student" 
+                        class="hidden peer" 
+                        required
+                    >
+                    <div class="
+                        p-4 
+                        border 
+                        border-gray-200 
+                        rounded-lg 
+                        cursor-pointer 
+                        transition 
+                        duration-300 
+                        hover:border-[#A294F9] 
+                        peer-checked:border-[#A294F9] 
+                        peer-checked:bg-[#F5EFFF] 
+                        peer-checked:shadow-md
+                    ">
+                        <div class="flex flex-col items-center">
+                            <i class="fas fa-graduation-cap text-4xl mb-2 text-gray-500 peer-checked:text-[#A294F9]"></i>
+                            <span class="text-gray-700 font-semibold peer-checked:text-[#8C7DF9]">Student</span>
+                            <p class="text-xs text-gray-500 text-center mt-2">
+                                Access learning resources and track your progress
+                            </p>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="role-option">
+                    <input 
+                        type="radio" 
+                        name="role" 
+                        value="teacher" 
+                        class="hidden peer" 
+                        required
+                    >
+                    <div class="
+                        p-4 
+                        border 
+                        border-gray-200 
+                        rounded-lg 
+                        cursor-pointer 
+                        transition 
+                        duration-300 
+                        hover:border-[#A294F9] 
+                        peer-checked:border-[#A294F9] 
+                        peer-checked:bg-[#F5EFFF] 
+                        peer-checked:shadow-md
+                    ">
+                        <div class="flex flex-col items-center">
+                            <i class="fas fa-chalkboard-teacher text-4xl mb-2 text-gray-500 peer-checked:text-[#A294F9]"></i>
+                            <span class="text-gray-700 font-semibold peer-checked:text-[#8C7DF9]">Teacher</span>
+                            <p class="text-xs text-gray-500 text-center mt-2">
+                                Create and manage courses, track student progress
+                            </p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
 
 
 
