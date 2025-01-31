@@ -31,7 +31,7 @@ if (isset($_POST['send-tag'])) {
             <div class="hidden md:flex items-center space-x-8">
                 <a href="create-category.php" class="text-gray-700 hover:text-green-700 transition-colors">Categories</a>
                 <a href="create-tag.php" class="text-gray-700 hover:text-green-700 transition-colors">Tags</a>
-                <a href="../auth/logout.php" class="bg-green-700 text-white px-6 py-2 rounded-full font-medium hover:bg-green-800 transition-colors">Logout</a>
+                <a href="../../public/index.php" class="bg-green-700 text-white px-6 py-2 rounded-full font-medium hover:bg-green-800 transition-colors">Logout</a>
             </div>
             <!-- Mobile Menu Button -->
             <button class="md:hidden p-2 focus:outline-none">
